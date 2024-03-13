@@ -1,11 +1,18 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": ["error", {"endOfLine": "auto"}]	
+  },
+  env: { browser: true, es2020: true, jest: true},
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
+    "./node_modules/gts/", "next/core-web-vitals"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
