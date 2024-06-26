@@ -1,11 +1,13 @@
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
+import Header from './components/header/ui';
 
 function App() {
-
-  return (
-    <>
-      <h1 className="text-2xl">Template vite + tailwind</h1>
-    </>
-  )
+    return (
+        <>
+            <RouterProvider router={router} />
+        </>
+    );
 }
 
-export default App
+export default App;
