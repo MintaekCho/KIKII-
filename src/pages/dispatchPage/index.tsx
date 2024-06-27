@@ -4,14 +4,45 @@ import { ReactComponent as RightArrow } from '../../assets/icons/ic_rightArrow.s
 import CustomTable from '@/components/customTable/ui';
 import { dispatchApi } from '@/api/dispatch';
 
+export interface DispatchType {
+    id: number;
+    startOrder: number;
+    routeName: string;
+    driverName: string;
+    driverId: number;
+    busId: number;
+    busNumber: string;
+    busType: string;
+    startTime: string;
+    unixStartTime: number | null;
+    busRound: number;
+};
+
 export default function DispatchPage() {
 
-    const [data, setData] = useState<any>([]);
+    const [dispatchData, setDispatchData] = useState<DispatchType[][]>([]);
+
+    function groupByDriverId(schedules: DispatchType[]): DispatchType[][] {
+        // 드라이버 ID별로 그룹화할 객체 생성
+        const grouped: { [key: number]: DispatchType[] } = {};
+    
+        // 배열을 순회하면서 그룹화
+        schedules.forEach(schedule => {
+            const driverId = schedule.driverId;
+            if (!grouped[driverId]) {
+                grouped[driverId] = [];
+            }
+            grouped[driverId].push(schedule);
+        });
+    
+        // 그룹화된 객체를 2차원 배열로 변환
+        return Object.values(grouped);
+    }
 
     useEffect(() => {
         const getDispatchList = async () => {
             const res = await dispatchApi.getDispatchList(70, '2024-05-23');
-            setData(res.object);
+            setDispatchData(groupByDriverId(res.object));
         }
         getDispatchList();
 
@@ -34,7 +65,7 @@ export default function DispatchPage() {
             <section className="w-full max-w-[960px] p-4 mt-10">
                 <div className='flex flex-col justify-start gap-4'>
                     <h1 className="text-[18px] font-bold">시간 및 차량, 성명란을 눌러 수정하세요</h1>
-                    <CustomTable />
+                    <CustomTable dispatchData={dispatchData} />
                 </div>
             </section>
         </div>

@@ -3,8 +3,14 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { INIT_DATA } from '../constant';
 import { useRecoilState } from 'recoil';
 import { dispatchState } from '@/atom/dispatchStore';
+import { DispatchType } from '@/pages/dispatchPage';
 
-export default function CustomTable() {
+type CustomTableProps = {
+    dispatchData: DispatchType[][]
+}
+
+export default function CustomTable({dispatchData}: CustomTableProps) {
+    console.log(dispatchData)
     const [data, setData] = useState(INIT_DATA);
     const [selectedDispatch, setSelectedDispatch] = useRecoilState(dispatchState);
 
@@ -29,7 +35,6 @@ export default function CustomTable() {
         }));
     };
 
-    console.log(selectedDispatch);
 
     return (
         <div className="w-full">
