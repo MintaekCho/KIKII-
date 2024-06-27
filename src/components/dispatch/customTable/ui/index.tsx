@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { INIT_DATA } from '../constant';
 import { useRecoilState } from 'recoil';
-import { dispatchState } from '@/atom/dispatchStore';
+import { INIT_DISPATCH_STATE, dispatchState } from '@/atom/dispatchStore';
 import { DispatchType } from '@/pages/dispatchPage';
 
 type CustomTableProps = {
-    dispatchData: DispatchType[][]
-}
+    dispatchData: DispatchType[][];
+};
 
-export default function CustomTable({dispatchData}: CustomTableProps) {
-    console.log(dispatchData)
+export default function CustomTable({ dispatchData }: CustomTableProps) {
+    console.log(dispatchData);
     const [data, setData] = useState(INIT_DATA);
     const [selectedDispatch, setSelectedDispatch] = useRecoilState(dispatchState);
+    const [maxTimeLength, setMaxTimeLength] = useState(0);
 
     const TABLE_HEADER_STYLE =
         'min-w-[80px] max-w-[120px] flex-1 bg-[#E2E5ED] px-2 py-5 text-gray-700 border-l border-t border-b border-black text-center';
     const TABLE_CELL_STYLE =
         'min-w-[80px] max-w-[120px] flex-1 px-2 py-4 text-gray-700 text-center border-l border-b border-black';
 
+    // dispatchData 중 가장 많은 버스의 시간표 길이를 반환
+    const getMaxTimeLength = () => {
+        return Math.max(...dispatchData.map((item) => item.length));
+    };
+    // TODO: 순번 재적용 필요
     const handleOnDragEnd = (result: any) => {
         if (!result.destination) return;
         const items = Array.from(data);
@@ -27,17 +33,29 @@ export default function CustomTable({dispatchData}: CustomTableProps) {
         setData(items);
     };
 
-    const handleSelectTimeCell = (dispatchData: any, x: number, y: number) => {
+    const handleSelectTimeCell = (dispatchData: any, id: string, index: number) => {
+        console.log(dispatchData);
+        if (
+            selectedDispatch.selectedTimeCellPostion[0] === id &&
+            selectedDispatch.selectedTimeCellPostion[1] === index
+        ) {
+            setSelectedDispatch(INIT_DISPATCH_STATE);
+            return;
+        }
         setSelectedDispatch((prev) => ({
             ...prev,
+            isSelected: true,
             selectedDispatch: dispatchData,
-            selectedTimeCellPostion: [x, y],
+            selectedTimeCellPostion: [id, index],
         }));
     };
 
+    useEffect(() => {
+        setMaxTimeLength(getMaxTimeLength());
+    }, []);
 
     return (
-        <div className="w-full">
+        <div className="w-full max-w-[1280px] overflow-hidden overflow-x-auto border border-black">
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="table" direction="vertical">
                     {(provided) => (
@@ -46,39 +64,45 @@ export default function CustomTable({dispatchData}: CustomTableProps) {
                                 <div className={`${TABLE_HEADER_STYLE}`}>순번</div>
                                 <div className={`${TABLE_HEADER_STYLE}`}>차량번호</div>
                                 <div className={`${TABLE_HEADER_STYLE}`}>성명</div>
-                                {[...Array(8)].map((_, index) => (
-                                    <div key={index} className={`${TABLE_HEADER_STYLE} ${index === 7 && 'border-r'}`}>
+                                {[...Array(18)].map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className={`${TABLE_HEADER_STYLE} ${index === maxTimeLength - 1 && 'border-r'}`}
+                                    >
                                         {index + 1}
                                     </div>
                                 ))}
                             </div>
                             <div className=" ">
-                                {data.map((item, index) => (
-                                    <Draggable key={item.id} draggableId={item.id} index={index}>
+                                {dispatchData.map((item, index) => (
+                                    <Draggable key={`row-${index}`} draggableId={`row-${index}`} index={index}>
                                         {(provided, snapshot) => (
                                             <div
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                                 ref={provided.innerRef}
-                                                className={`flex ${snapshot.isDragging && 'bg-[#f3f3f5]'} font-bold hover:bg-[#f3f3f5] group-hover:bg-[#f3f3f5]`}
+                                                className={`flex ${snapshot.isDragging && 'bg-[#f3f3f5] max-w-[1280px] overflow-hidden'} font-bold hover:bg-[#f3f3f5] group-hover:bg-[#f3f3f5]`}
                                             >
                                                 <div className={`${TABLE_CELL_STYLE} bg-[#E2E5ED] group`}>
-                                                    {item.id}
+                                                    {index + 1}
                                                 </div>
-                                                <div className={`${TABLE_CELL_STYLE}`}>{item.carNumber}</div>
-                                                <div className={`${TABLE_CELL_STYLE}`}>{item.name}</div>
-                                                {item.times.map((time, i) => {
+                                                <div className={`${TABLE_CELL_STYLE}`}>{item[index].busId}</div>
+                                                <div className={`${TABLE_CELL_STYLE}`}>{item[index].driverName}</div>
+                                                {item.map((info, i) => {
                                                     const isSelect =
                                                         selectedDispatch &&
-                                                        selectedDispatch.selectedTimeCellPostion[0] === index &&
+                                                        selectedDispatch.selectedTimeCellPostion[0] ===
+                                                            info.driverName &&
                                                         selectedDispatch.selectedTimeCellPostion[1] === i;
                                                     return (
                                                         <div
                                                             key={i}
-                                                            onClick={() => handleSelectTimeCell(item, index, i)}
-                                                            className={`cursor-pointer ${TABLE_CELL_STYLE} ${isSelect && 'bg-[#C7CCFF]'}  ${item.times.length - 1 === i && 'border-r'} border-black duration-300`}
+                                                            onClick={() =>
+                                                                handleSelectTimeCell(info, info.driverName, i)
+                                                            }
+                                                            className={`cursor-pointer ${TABLE_CELL_STYLE} ${isSelect && 'bg-[#C7CCFF]'}  ${item.length - 1 === i && 'border-r'} border-black duration-300`}
                                                         >
-                                                            {time}
+                                                            {info.startTime}
                                                         </div>
                                                     );
                                                 })}

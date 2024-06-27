@@ -4,8 +4,6 @@ import { CSSTransition, SwitchTransition, TransitionGroup } from 'react-transiti
 
 export default function Layout() {
     const location = useLocation();
-    console.log(location);
-
 
     return (
         <>
