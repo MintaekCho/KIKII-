@@ -1,11 +1,13 @@
 import { atom } from "recoil";
 
 interface DispatchStateType {
-    selectedTimeCellPostion: [number, number] | [],
+    isSelected: boolean,
+    selectedTimeCellPostion: [string, number] | [],
     selectedDispatch: object,
 }
 
 export const INIT_DISPATCH_STATE: DispatchStateType = {
+    isSelected: false,
     selectedTimeCellPostion: [],
     selectedDispatch: {}, 
 }
