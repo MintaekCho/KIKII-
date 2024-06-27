@@ -1,4 +1,5 @@
 import { CommonResponseType } from '@/interface/api/commonType';
+import { ls } from '@/utils/stroage';
 import axios, {
     AxiosInstance,
     AxiosInterceptorManager,
@@ -34,7 +35,7 @@ const client: CustomInstance = axios.create({
 
 client.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('accessToken');
+        const token = ls.get('accessToken');
 
         if (!(config.data instanceof FormData)) {
             config.headers['Content-Type'] = 'application/json';
