@@ -25,9 +25,9 @@ export default function LoginPage() {
         const res = await authApi.login(loginForm);
         console.log(res);
         ls.set('accessToken', res.object.token);
-        ss.set('name', res.object.name);
-        ss.set('position', res.object.position);
-        ss.set('role', res.object.role);
+        ls.set('name', res.object.name);
+        ls.set('position', res.object.position);
+        ls.set('role', res.object.role);
         navigate('/dispatch');
     };
 
