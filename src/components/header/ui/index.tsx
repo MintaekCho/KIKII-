@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { HEADER_CATEGORY } from '../constant';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Profile } from '@/assets/icons/ic_profile.svg';
 import { ls, ss } from '@/utils/stroage';
 
 export default function Header() {
-    const [selectCategory, setSelectCategory] = useState(HEADER_CATEGORY[2]);
-
+    const [selectCategory, setSelectCategory] = useState(HEADER_CATEGORY[0]);
+    const location = useLocation();
     const navigate = useNavigate();
 
     const handleNavigate = (category: any) => {
@@ -27,10 +27,17 @@ export default function Header() {
         }
     }, [location]);
 
+    useEffect(() => {
+        const currentCategory = HEADER_CATEGORY.find((category) => category.path === location.pathname);
+        if (currentCategory) {
+            setSelectCategory(currentCategory);
+        }
+    }, [location]);
+
     return (
         <header className="w-full min-w-[1280px] h-20 bg-[#EBECFC] flex items-center justify-around px-16">
-            <div className='w-[200px]' />
-            <div className='flex items-center gap-28'>
+            <div className="w-[200px]" />
+            <div className="flex items-center gap-28">
                 {HEADER_CATEGORY.map((category, index) => {
                     const isSelected = selectCategory.name === category.name;
                     return (
