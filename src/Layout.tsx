@@ -1,6 +1,6 @@
+import { CSSTransition, SwitchTransition, TransitionGroup } from 'react-transition-group';
 import Header from './components/header/ui';
 import { Outlet, useLocation } from 'react-router-dom';
-import { CSSTransition, SwitchTransition, TransitionGroup } from 'react-transition-group';
 
 export default function Layout() {
     const location = useLocation();
@@ -10,9 +10,14 @@ export default function Layout() {
         {
             location.pathname === '/login' ? null : <Header />
         }
-            <main className='w-full h-full'>
+            <main className='w-full'>
                 <TransitionGroup>
-                    <CSSTransition key={location.key} classNames="w-full h-full fade" timeout={300}>
+                    <CSSTransition
+                        key={location.key}
+                        classNames="fade"
+                        timeout={300}
+                        unmountOnExit
+                    >
                         <div className='w-full h-full'>
                             <Outlet />
                         </div>
