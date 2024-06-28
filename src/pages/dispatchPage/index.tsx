@@ -53,15 +53,13 @@ export default function DispatchPage() {
         });
 
         // 그룹화된 객체를 2차원 배열로 변환
-        return Object.values(grouped);
+        return Object.values(grouped).sort((a, b) => a[0].startOrder - b[0].startOrder);
     }
 
     const { data, isLoading, refetch } = useQuery({
         queryKey: ['dispatchList', currentDate],
         queryFn: () => dispatchApi.getDispatchList(70, currentDate),
     });
-
-    console.log(data);
 
     useEffect(() => {
         if (!data) return;

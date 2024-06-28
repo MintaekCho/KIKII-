@@ -76,7 +76,7 @@ export default function EditTimeBox({ refetch }: { refetch: () => void }) {
         <>
             <CSSTransition classNames="fade" timeout={300} in={selectedDispatch.isSelected} unmountOnExit>
                 <section
-                    className={`w-[500px] h-screen p-10 flex flex-col items-center  bg-[#EBECFC] border border-[#707070] ${selectedDispatch.isSelected ? 'black' : 'hidden'}`}
+                    className={`w-[500px] p-10 flex flex-col items-center  bg-[#EBECFC] border border-[#707070] ${selectedDispatch.isSelected ? 'black' : 'hidden'}`}
                 >
                     <h1 className="text-3xl font-bold">시간 수정</h1>
                     <div className="w-full flex flex-col gap-2 mt-20">

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { INIT_DATA } from '../constant';
 import { useRecoilState } from 'recoil';
 import { INIT_DISPATCH_STATE, dispatchState } from '@/atom/dispatchStore';
 import { DispatchType } from '@/pages/dispatchPage';
@@ -10,8 +9,7 @@ type CustomTableProps = {
 };
 
 export default function CustomTable({ dispatchData }: CustomTableProps) {
-    console.log(dispatchData);
-    const [data, setData] = useState(INIT_DATA);
+    const [data, setData] = useState<DispatchType[][]>([]);
     const [selectedDispatch, setSelectedDispatch] = useRecoilState(dispatchState);
     const [maxTimeLength, setMaxTimeLength] = useState(0);
 
@@ -54,6 +52,11 @@ export default function CustomTable({ dispatchData }: CustomTableProps) {
         setMaxTimeLength(getMaxTimeLength());
     }, []);
 
+    useEffect(() => {
+        if (!dispatchData) return;
+        setData(dispatchData);
+    }, [dispatchData])
+
     return (
         <div className="w-full max-w-[1280px] min-h-[500px] overflow-hidden overflow-x-auto border border-black">
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -74,7 +77,7 @@ export default function CustomTable({ dispatchData }: CustomTableProps) {
                                 ))}
                             </div>
                             <div className=" ">
-                                {dispatchData.map((item, index) => (
+                                {data.map((item, index) => (
                                     <Draggable key={`row-${index}`} draggableId={`row-${index}`} index={index}>
                                         {(provided, snapshot) => (
                                             <div
@@ -84,7 +87,7 @@ export default function CustomTable({ dispatchData }: CustomTableProps) {
                                                 className={`flex ${snapshot.isDragging && 'bg-[#f3f3f5] max-w-[1280px] overflow-hidden'} font-bold hover:bg-[#f3f3f5] group-hover:bg-[#f3f3f5]`}
                                             >
                                                 <div className={`${TABLE_CELL_STYLE} bg-[#E2E5ED] group`}>
-                                                    {index + 1}
+                                                    {item[index].startOrder + 1}
                                                 </div>
                                                 <div className={`${TABLE_CELL_STYLE}`}>{item[index].busId}</div>
                                                 <div className={`${TABLE_CELL_STYLE}`}>{item[index].driverName}</div>
