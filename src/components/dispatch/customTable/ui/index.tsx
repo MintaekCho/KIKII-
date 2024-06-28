@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useRecoilState } from 'recoil';
 import { INIT_DISPATCH_STATE, dispatchState } from '@/atom/dispatchStore';
@@ -8,7 +8,7 @@ type CustomTableProps = {
     dispatchData: DispatchType[][];
 };
 
-export default function CustomTable({ dispatchData }: CustomTableProps) {
+function CustomTable({ dispatchData }: CustomTableProps) {
     const [data, setData] = useState<DispatchType[][]>([]);
     const [selectedDispatch, setSelectedDispatch] = useRecoilState(dispatchState);
     const [maxTimeLength, setMaxTimeLength] = useState(0);
@@ -126,3 +126,5 @@ export default function CustomTable({ dispatchData }: CustomTableProps) {
         </div>
     );
 }
+
+export default memo(CustomTable);

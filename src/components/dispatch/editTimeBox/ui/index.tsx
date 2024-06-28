@@ -1,10 +1,10 @@
 import { INIT_DISPATCH_STATE, dispatchState } from '@/atom/dispatchStore';
 import { CSSTransition } from 'react-transition-group';
 import { useRecoilState } from 'recoil';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { dispatchApi } from '@/api/dispatch';
 
-export default function EditTimeBox({ refetch }: { refetch: () => void }) {
+function EditTimeBox({ refetch }: { refetch: () => void }) {
     const INIT_EDIT_TIME = {
         hour: '',
         sec: '',
@@ -130,3 +130,5 @@ export default function EditTimeBox({ refetch }: { refetch: () => void }) {
         </>
     );
 }
+
+export default memo(EditTimeBox);
