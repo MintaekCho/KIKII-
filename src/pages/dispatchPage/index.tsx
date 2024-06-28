@@ -59,6 +59,7 @@ export default function DispatchPage() {
     const { data, isLoading, refetch } = useQuery({
         queryKey: ['dispatchList', currentDate],
         queryFn: () => dispatchApi.getDispatchList(70, currentDate),
+        staleTime: 1000 * 60 * 1,
     });
 
     useEffect(() => {
