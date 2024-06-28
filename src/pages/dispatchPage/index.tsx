@@ -68,7 +68,7 @@ export default function DispatchPage() {
     }, [data]);
 
     return (
-        <div className={`w-full h-full flex`}>
+        <div style={{height: 'calc(100vh - 80px)'}} className={`w-full flex`}>
             <div className={`w-full h-full flex flex-col items-center relative overflow-hidden`}>
                 <div className="w-full flex items-center justify-center mt-10 gap-40">
                     <div className="cursor-pointer" onClick={() => handleDateChange('down')}>
