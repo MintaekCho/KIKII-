@@ -3,28 +3,24 @@
 @tailwind utilities;
 
 html body {
-  @apply w-screen h-screen bg-white
+    @apply w-screen h-screen bg-white;
 }
 
 #root {
-  @apply w-full h-[calc(100%)]
+    @apply w-full h-[calc(100%)];
 }
 
 .fade-enter {
-  opacity: 0;
-  z-index: 1;
+    opacity: 0;
 }
-
 .fade-enter-active {
-  opacity: 1;
-  transition: opacity 300ms ease-in;
+    opacity: 1;
+    transition: opacity 300ms;
 }
-
 .fade-exit {
-  opacity: 1;
+    opacity: 1;
 }
-
 .fade-exit-active {
-  opacity: 0;
-  transition: opacity 300ms ease-in;
+    opacity: 0;
+    transition: opacity 300ms;
 }

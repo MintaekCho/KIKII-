@@ -55,7 +55,7 @@ export default function CustomTable({ dispatchData }: CustomTableProps) {
     }, []);
 
     return (
-        <div className="w-full max-w-[1280px] overflow-hidden overflow-x-auto border border-black">
+        <div className="w-full max-w-[1280px] min-h-[500px] overflow-hidden overflow-x-auto border border-black">
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="table" direction="vertical">
                     {(provided) => (
