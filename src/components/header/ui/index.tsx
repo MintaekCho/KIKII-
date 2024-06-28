@@ -50,7 +50,7 @@ export default function Header() {
                     );
                 })}
             </div>
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-4">
                 <Profile />
                 <span>{`${ls.get('name')} 님`}</span>
                 <button
