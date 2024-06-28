@@ -26,7 +26,6 @@ function EditTimeBox({ refetch }: { refetch: () => void }) {
             return;
         }
         const res = await dispatchApi.updateDispatch(id, `${editTime.hour}:${editTime.sec}`);
-        console.log(res);
         if (res.status === 200) {
             refetch();
         }

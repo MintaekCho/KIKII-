@@ -28,7 +28,6 @@ export default function LoginPage() {
         }
         try {
             const res = await authApi.login(loginForm);
-            console.log(res);
             ls.set('accessToken', res.object.token);
             ls.set('name', res.object.name);
             ls.set('position', res.object.position);

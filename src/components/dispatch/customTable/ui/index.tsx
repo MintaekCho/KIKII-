@@ -32,7 +32,6 @@ function CustomTable({ dispatchData }: CustomTableProps) {
     };
 
     const handleSelectTimeCell = (dispatchData: any, id: string, index: number) => {
-        console.log(dispatchData);
         if (
             selectedDispatch.selectedTimeCellPostion[0] === id &&
             selectedDispatch.selectedTimeCellPostion[1] === index
