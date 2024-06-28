@@ -14,9 +14,9 @@ function CustomTable({ dispatchData }: CustomTableProps) {
     const [maxTimeLength, setMaxTimeLength] = useState(0);
 
     const TABLE_HEADER_STYLE =
-        'min-w-[80px] max-w-[150px] flex-1 bg-[#E2E5ED] px-2 py-5 text-gray-700 border-l border-t border-b border-black text-center';
+        'min-w-[100px] max-w-[150px] flex-1 bg-[#E2E5ED] px-2 py-5 text-gray-700 border-l border-t border-b border-black text-center';
     const TABLE_CELL_STYLE =
-        'min-w-[80px] max-w-[150px] flex-1 px-2 py-4 text-gray-700 text-center border-l border-b border-black';
+        'min-w-[100px] max-w-[150px] flex-1 px-2 py-4 text-gray-700 text-center border-l border-b border-black';
 
     // dispatchData 중 가장 많은 버스의 시간표 길이를 반환
     const getMaxTimeLength = () => {
