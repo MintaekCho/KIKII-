@@ -50,6 +50,10 @@ export default function CustomTable({ dispatchData }: CustomTableProps) {
 
     useEffect(() => {
         setMaxTimeLength(getMaxTimeLength());
+
+        return () => {
+            setSelectedDispatch(INIT_DISPATCH_STATE);
+        }
     }, []);
 
     useEffect(() => {
