@@ -1,30 +1,27 @@
-# React + TypeScript + Vite
+# 키키아이 과제
+---
+## 실행 방법
+1. npm i
+2. npm start
+---
+## 프로젝트 구성
+- React + Vite(번들러)
+- tailwind(utility css library)
+---
+## 사용 라이브러리
+1. svgr/rollup - svg 컴포넌트화
+2. react-query - 페이지 최적화
+3. react-beautiful-dnd - 드래그 앤 드롭
+4. moment - 타임 유틸
+5. recoil - 전역 상태 관리
+6. react-transition-group - 페이지 전환 애니매이션
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 개발 요구사항
+|                                                              |                                                              |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|     **로그인**    |    **로그아웃** |
+|![로그인](https://github.com/MintaekCho/KIKII-/assets/105726931/dad4af11-d9da-4823-a57d-72089ff5675b)|  ![로그아웃](https://github.com/MintaekCho/KIKII-/assets/105726931/34c95bcc-c5bc-459d-ba7d-54a17107e293) |
+|     **배차조회**   |   **배차 시간 수정** |
+| ![배차 시간 조회](https://github.com/MintaekCho/KIKII-/assets/105726931/6da90299-497a-4715-8e59-07b8812994a5)| ![시간수정](https://github.com/MintaekCho/KIKII-/assets/105726931/cc05a162-f26d-44a8-8eac-f7f9d9a182d6)| 
+|     **D&D**     | |
+|![드래그앤드롭](https://github.com/MintaekCho/KIKII-/assets/105726931/0d4310a4-0e9a-4c95-a6a8-5a6b5e96871c)| |
