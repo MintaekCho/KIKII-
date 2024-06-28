@@ -22,13 +22,21 @@ export default function LoginPage() {
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const res = await authApi.login(loginForm);
-        console.log(res);
-        ls.set('accessToken', res.object.token);
-        ls.set('name', res.object.name);
-        ls.set('position', res.object.position);
-        ls.set('role', res.object.role);
-        navigate('/dispatch');
+        if (!loginForm.loginId || !loginForm.password) {
+            alert('아이디와 비밀번호를 입력해주세요.');
+            return;
+        }
+        try {
+            const res = await authApi.login(loginForm);
+            console.log(res);
+            ls.set('accessToken', res.object.token);
+            ls.set('name', res.object.name);
+            ls.set('position', res.object.position);
+            ls.set('role', res.object.role);
+            navigate('/dispatch');
+        } catch (error) {
+            alert('아이디와 비밀번호를 확인해주세요.');
+        }
     };
 
     return (
@@ -49,6 +57,8 @@ export default function LoginPage() {
                         value={loginForm.password}
                         placeholder="비밀번호"
                         onChange={handleInputChange}
+                        isLoginIdEntered={loginForm.loginId.length > 3 ? true : false}
+                        isPw={true}
                     />
                     <button className="px-8 py-2 mt-10 bg-black rounded-[24px] text-white text-md" onClick={() => {}}>
                         로그인하기
