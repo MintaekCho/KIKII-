@@ -3,6 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useRecoilState } from 'recoil';
 import React, { memo, useEffect, useState } from 'react';
 import { dispatchApi } from '@/api/dispatch';
+import { ReactComponent as DeleteIcon } from '@/assets/icons/ic_delete.svg';
 
 function EditTimeBox({ refetch }: { refetch: () => void }) {
     const INIT_EDIT_TIME = {
@@ -17,6 +18,15 @@ function EditTimeBox({ refetch }: { refetch: () => void }) {
 
     const handleCancel = () => {
         setSelectedDispatch(INIT_DISPATCH_STATE);
+        setEditTime(INIT_EDIT_TIME);
+    };
+
+    const handleSelectCancle = () => {
+        setSelectedDispatch((prev) => ({
+            ...prev,
+            selectedTimeCellPostion: [],
+            selectedDispatch: {},
+        }));
         setEditTime(INIT_EDIT_TIME);
     };
 
@@ -83,10 +93,15 @@ function EditTimeBox({ refetch }: { refetch: () => void }) {
                         <p className="text-[14px]">
                             <b>변경할 시간</b>을 선택(클릭)해주세요.
                         </p>
-                        <div className="w-full h-[50px] bg-white grid place-items-center">
+                        <div className="w-full h-[50px] bg-white grid place-items-center relative">
                             <p className="text-[18px]">
-                                {driverName} - {busRound + 1} 회차 / {startTime}
+                                {selectedDispatch.selectedTimeCellPostion.length !== 0
+                                    ? `${driverName} - ${busRound + 1} 회차 / ${startTime}`
+                                    : '-'}
                             </p>
+                            <div className="absolute right-5 cursor-pointer" onClick={handleSelectCancle}>
+                                <DeleteIcon />
+                            </div>
                         </div>
                     </div>
                     <div className="w-full flex flex-col gap-2 mt-8">
